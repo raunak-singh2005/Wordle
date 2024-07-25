@@ -11,10 +11,10 @@ def playGame():
     attempts = 6
 
     while attempts > 0:
-        print(f'The current invalid characters are: {invChar}')
+        print(f'The current invalid characters are: {invChar }')
         guess = getGuess()
         if guess == hiddenWord:
-            print(f'You guessed the words correctly! WIN 🕺🕺🕺 you had {attempts} attempts left')
+            print(f'You guessed the words correctly! YOU WIN 🕺🕺🕺\n You had {attempts} attempts left out of 6')
             winGame(attempts)
             break
         else:
@@ -41,7 +41,7 @@ def getGuess():
 
 
 def winGame(score):
-    with open('history.txt', 'w') as f:
+    with open('history.txt', 'a') as f:
         f.write(f'{date.today()}: You only had {score} attempts left\n')
         f.close()
 
@@ -74,7 +74,7 @@ Your Progress Guide "✔❌➕":
     print(f'previous game:\n{getHistory()}')
     while status:
         playGame()
-        newGame = input('Would you like to play again? (y/n)')
+        newGame = input('Would you like to play again, enter "n" to exit and anything else to continue: ')
         if newGame == 'n':
             status = False
     print('Thank you for playing!')
