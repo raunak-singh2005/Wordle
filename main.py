@@ -2,7 +2,7 @@ from datetime import date
 import re
 import requests
 import random
-
+import sys
 
 def playGame():
     wordList = getWords()
@@ -14,7 +14,6 @@ def playGame():
         print(f'The current invalid characters are: {invChar }')
         guess = getGuess()
         if guess == hiddenWord:
-            print(f'You guessed the words correctly! YOU WIN 🕺🕺🕺\n You had {attempts} attempts left out of 6')
             winGame(attempts)
             break
         else:
@@ -41,6 +40,7 @@ def getGuess():
 
 
 def winGame(score):
+    print(f'You guessed the words correctly! YOU WIN 🕺🕺🕺\n You had {score} attempts left out of 6')
     with open('history.txt', 'a') as f:
         f.write(f'{date.today()}: You only had {score} attempts left\n')
         f.close()
@@ -61,20 +61,40 @@ def getWords():
     return word_list
 
 
+def login():
+    username = str(input('Enter your username: '))
+    password = str(input('Enter your password: '))
+
+    realUsername = "krish rules"
+    realPassword = "raunak rules"
+
+    if username == realUsername and password == realPassword:
+        return True
+    else:
+        return False
+
 if __name__ == '__main__':
-    status = True
-    print(
-        '''Wordle is a single player game
+
+    login = login()
+
+    if login:
+
+        status = True
+        print(
+            '''Wordle is a single player game
 A player has to guess a five letter hidden word
 You have six attempts 
 Your Progress Guide "✔❌➕":
 "✔" Indicates that the letter at that position was guessed correctly
 "➕" indicates that the letter at that position is in the hidden word, but in a different position
 "❌" indicates that the letter at that position is wrong, and isn't in the hidden word   ''')
-    print(f'previous game:\n{getHistory()}')
-    while status:
-        playGame()
-        newGame = input('Would you like to play again, enter "n" to exit and anything else to continue: ')
-        if newGame == 'n':
-            status = False
-    print('Thank you for playing!')
+        print(f'previous game:\n{getHistory()}')
+        while status:
+            playGame()
+            newGame = input('Would you like to play again, enter "n" to exit and anything else to continue: ')
+            if newGame == 'n':
+                status = False
+        print('Thank you for playing!')
+
+    else:
+        sys.exit()
